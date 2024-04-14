@@ -1,0 +1,14 @@
+//installation
+pip install celery (optional)
+pip install redis
+pip install django-celery-results
+pip install django-celery-beat
+
+//starting workers
+celery -A bookingProject worker -l INFO
+celery -A bookingProject beat -l INFO
+
+//config
+*installed apps 
+-'django_celery_results'
+python manage.py migrate django_celery_results
