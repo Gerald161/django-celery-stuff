@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django_celery_results',
     "account",
     'django_celery_beat',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +133,16 @@ CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 
 #This last one might have impact on database schedule manually
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+    }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}

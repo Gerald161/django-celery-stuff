@@ -3,6 +3,45 @@ from .tasks import add, subs
 from django_celery_beat.models import PeriodicTask, IntervalSchedule, CrontabSchedule
 import json
 
+#cache stuff below
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from rest_framework.response import Response
+from rest_framework.views import APIView
+import time
+import random
+
+
+class ProfileView(APIView):
+    # With auth: cache requested url for each user for 2 hours
+    # @method_decorator(cache_page(60 * 60 * 2))
+    @method_decorator(cache_page(10))
+    def get(self, request):
+        time.sleep(5)
+
+        random_number = random.randint(0, 10)
+
+        content = {
+            "user_feed": "really long feed",
+            "num": random_number
+        }
+        return Response(content)
+    
+
+class ProfileView2(APIView):
+    # With auth: cache requested url for each user for 2 hours
+    # @method_decorator(cache_page(60 * 60 * 2))
+    def get(self, request):
+        time.sleep(5)
+
+        random_number = random.randint(0, 10)
+
+        content = {
+            "user_feed": "really long feed",
+            "num": random_number
+        }
+        return Response(content)
+
 # Create your views here.
 def test(request):
     add.delay(1,2)
